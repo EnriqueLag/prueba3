@@ -189,12 +189,37 @@ public class Board extends JPanel implements ActionListener {
     }
 
     private void locateApple() {
-
-        int r = (int) (Math.random() * RAND_POS);
-        apple_x = ((r * DOT_SIZE));
-
-        r = (int) (Math.random() * RAND_POS);
-        apple_y = ((r * DOT_SIZE));
+        boolean goodSquare = false;
+        while (true){
+            int r = (int) (Math.random() * RAND_POS);
+            apple_x = ((r * DOT_SIZE));
+            for (int z = 0; z < dots; z++) {
+                if (x[z] == apple_x){
+                    goodSquare = false;
+                    break;
+                }
+                goodSquare = true;
+            }
+            if (goodSquare){
+                break;
+            }
+        }
+        goodSquare = true;
+        while (true){
+            goodSquare = false;
+            int r = (int) (Math.random() * RAND_POS);
+            apple_y = ((r * DOT_SIZE));
+            for (int z = 0; z < dots; z++) {
+                if (y[z] == apple_y){
+                    goodSquare = false;
+                    break;
+                }
+                goodSquare = true;
+            }
+            if (goodSquare){
+                break;
+            }
+        }
     }
 
     @Override
