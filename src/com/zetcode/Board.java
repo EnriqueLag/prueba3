@@ -93,7 +93,7 @@ public class Board extends JPanel implements ActionListener {
     }
     
     private void doDrawing(Graphics g) {
-        
+
         if (inGame) {
 
             g.drawImage(apple, apple_x, apple_y, this);
@@ -111,18 +111,22 @@ public class Board extends JPanel implements ActionListener {
         } else {
 
             gameOver(g);
-        }        
+
+        }   
+        
     }
 
     private void gameOver(Graphics g) {
         
         String msg = "Game Over";
+        String restartmsg = "Press R to Restart";
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
         g.setColor(Color.white);
         g.setFont(small);
         g.drawString(msg, (B_WIDTH - metr.stringWidth(msg)) / 2, B_HEIGHT / 2);
+        g.drawString(restartmsg, (B_WIDTH - metr.stringWidth(restartmsg)) / 2, B_HEIGHT / 2 + 20); 
     }
 
     private void checkApple() {
@@ -210,6 +214,22 @@ public class Board extends JPanel implements ActionListener {
         repaint();
     }
 
+
+    private void restartGame() { 
+        inGame = true;
+        leftDirection = false; 
+        rightDirection = true; 
+        upDirection = false; 
+        downDirection = false; 
+        dots = 3; 
+        for (int i = 0; i < dots; i++) { 
+            x[i] = 50 - i * 10; y[i] = 50; 
+        } 
+        locateApple(); 
+        timer.start();
+    }
+
+
     private class TAdapter extends KeyAdapter {
 
         @Override
@@ -240,6 +260,10 @@ public class Board extends JPanel implements ActionListener {
                 rightDirection = false;
                 leftDirection = false;
             }
+
+            if( (key == KeyEvent.VK_R) && (!inGame)){
+                restartGame();
+            } 
         }
     }
 }
