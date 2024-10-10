@@ -36,6 +36,7 @@ public class Board extends JPanel implements ActionListener {
     private boolean upDirection = false;
     private boolean downDirection = false;
     private boolean inGame = true;
+    private boolean onSameTile = false;
 
     private Timer timer;
     private Image ball;
@@ -140,7 +141,7 @@ public class Board extends JPanel implements ActionListener {
             x[z] = x[(z - 1)];
             y[z] = y[(z - 1)];
         }
-
+        
         if (leftDirection) {
             x[0] -= DOT_SIZE;
         }
@@ -155,7 +156,8 @@ public class Board extends JPanel implements ActionListener {
 
         if (downDirection) {
             y[0] += DOT_SIZE;
-        }
+        } 
+        onSameTile = false;
     }
 
     private void checkCollision() {
@@ -217,29 +219,34 @@ public class Board extends JPanel implements ActionListener {
 
             int key = e.getKeyCode();
 
-            if ((key == KeyEvent.VK_LEFT) && (!rightDirection)) {
+            if ((key == KeyEvent.VK_LEFT) && (!rightDirection) && (!onSameTile)) {
                 leftDirection = true;
                 upDirection = false;
                 downDirection = false;
+                onSameTile = true;
             }
 
-            if ((key == KeyEvent.VK_RIGHT) && (!leftDirection)) {
+            if ((key == KeyEvent.VK_RIGHT) && (!leftDirection) && (!onSameTile)) {
                 rightDirection = true;
                 upDirection = false;
                 downDirection = false;
+                onSameTile = true;
             }
 
-            if ((key == KeyEvent.VK_UP) && (!downDirection)) {
+            if ((key == KeyEvent.VK_UP) && (!downDirection) && (!onSameTile)) {
                 upDirection = true;
                 rightDirection = false;
                 leftDirection = false;
+                onSameTile = true;
             }
 
-            if ((key == KeyEvent.VK_DOWN) && (!upDirection)) {
+            if ((key == KeyEvent.VK_DOWN) && (!upDirection) && (!onSameTile)) {
                 downDirection = true;
                 rightDirection = false;
                 leftDirection = false;
+                onSameTile = true;
             }
         }
     }
 }
+
